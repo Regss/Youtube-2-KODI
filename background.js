@@ -7,6 +7,14 @@ function getURLfromTab() {
     });
 }
 
+function checkIcon() {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+        var currentTabURL = tabs[0].url;
+        if (currentTabURL.match("youtube.com[^\s]+v=[A-Za-z0-9_-]{11}") || currentTabURL.match("youtube.com[^\s]+list=[A-Za-z0-9_-]{34}")) setIconColor();
+        else setIconGrey();
+    });
+}
+
 function parseYoutubeURL(url) {
 
     var data = {  };
@@ -23,7 +31,7 @@ function parseYoutubeURL(url) {
         data['playlist_id'] = matchList[1];
     }
     
-    if (!matchList && !matchList) {
+    if (!matchVideo && !matchList) {
         notify("This is not youtube URL");
     } else {
         getHostData(data);
@@ -97,4 +105,25 @@ function encodeQueryData(data) {
     return escape(ret.join('&'));
 }
 
+function setIconColor() {
+    browser.browserAction.setIcon({
+        path:  {
+          96: "icons/youtube2kodi-96.png",
+          48: "icons/youtube2kodi-48.png"
+        }
+    });
+}
+
+function setIconGrey() {
+    browser.browserAction.setIcon({
+        path:  {
+          96: "icons/youtube2kodi_nk-96.png",
+          48: "icons/youtube2kodi_nk-48.png"
+        }
+    });
+}
+
 chrome.browserAction.onClicked.addListener(getURLfromTab);
+chrome.tabs.onUpdated.addListener(checkIcon);
+chrome.tabs.onActivated.addListener(checkIcon);
+checkIcon();
