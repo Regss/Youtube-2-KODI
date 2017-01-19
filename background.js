@@ -1,21 +1,19 @@
-var tabID;
+var videoPattern = /^https?:\/\/www\.youtube\.com\/.*[?&]v=([A-Za-z0-9_-]{11})/;
+var playlistPattern = /^https?:\/\/www\.youtube\.com\/.*[?&]list=([A-Za-z0-9_-]{34})/;
 
-function getURLfromTab() {
-    console.log("tabID: " + tabID);
-    chrome.tabs.get(tabID, function(tab){
-        console.log(tab.url);
-        if (tab.url.match("youtube.com")) parseYoutubeURL(tab.url);
-        else notify("You must be on youtube site");
-    });
+function getURLfromTab(tabURL) {
+    console.log("tabURL: " + tabURL);
+    var id = /^https?:\/\/www\.youtube\.com\/.*/.exec(tabURL);
+    if (id) parseYoutubeURL(tabURL);
+    else notify("You must be on youtube site");
 }
 
-function checkIcon() {
-    console.log("tabID: " + tabID);
-    chrome.tabs.get(tabID, function(tab){
-        console.log(tab.url);
-        if (tab.url.match("youtube.com[^\s]+v=[A-Za-z0-9_-]{11}") || tab.url.match("youtube.com[^\s]+list=[A-Za-z0-9_-]{34}")) setIconColor();
-        else setIconGrey();
-    });
+function checkIcon(tabURL) {
+    console.log("url: " + tabURL);
+    var videoid = videoPattern.exec(tabURL);
+    var playlistid = playlistPattern.exec(tabURL);
+    if (videoid || playlistid) setIconColor();
+    else setIconGrey();
 }
 
 function parseYoutubeURL(url) {
@@ -24,8 +22,8 @@ function parseYoutubeURL(url) {
     data['order'] = 'default';
     data['play'] = '1';
     
-    var matchVideo = url.match("v=([A-Za-z0-9_-]{11})");
-    var matchList = url.match("list=([A-Za-z0-9_-]{34})");
+    var matchVideo = videoPattern.exec(url);
+    var matchList = playlistPattern.exec(url);
     
     if (matchVideo && matchVideo.length > 1) {
         data['video_id'] = matchVideo[1];
@@ -125,18 +123,22 @@ function setIconGrey() {
     });
 }
 
-chrome.browserAction.onClicked.addListener(getURLfromTab);
+chrome.browserAction.onClicked.addListener(function(tab) {
+    getURLfromTab(tab.url);
+});
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-    tabID = tab.id;
-    checkIcon()
+    checkIcon(tab.url)
 });
+
 chrome.tabs.onActivated.addListener(function(tab){
-    tabID = tab.tabId;
-    checkIcon()
+    chrome.tabs.get(tab.tabId, function(url){
+        checkIcon(url.url)
+    });
 });
+
 chrome.tabs.onCreated.addListener(function(tab){
-    tabID = tab.id;
-    checkIcon()
+    checkIcon(tab.url)
 });
+
 setIconGrey()
