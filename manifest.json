@@ -1,0 +1,32 @@
+{
+	"applications": {
+		"gecko": {
+			"id": "{6a87491e-e1ed-4c2c-b1b6-4aa07a2f9282}",
+			"strict_min_version": "42.0",
+			"strict_max_version": "50.*",
+			"update_url": "https://regss-home.tk/youtube2kodi/updates.json"
+		}
+	},
+	"manifest_version": 2,
+	"name": "Youtube 2 KODI",
+	"version": "1.1.0",
+	"description": "Play Youtube video in KODI",
+	"icons": {
+		"48": "icons/youtube2kodi-48.png",
+		"96": "icons/youtube2kodi-96.png"
+	},
+	"permissions": ["tabs",
+	"notifications",
+	"storage",
+	"http://*/"],
+	"browser_action": {
+		"default_icon": "icons/youtube2kodi-38.png",
+		"default_title": "Youtube 2 KODI"
+	},
+	"options_ui": {
+		"page": "options.html"
+	},
+	"background": {
+		"scripts": ["background.js"]
+	}
+}
