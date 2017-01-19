@@ -1,16 +1,19 @@
+var tabID;
 
 function getURLfromTab() {
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-        var currentTabURL = tabs[0].url;
-        if (currentTabURL.match("youtube.com")) parseYoutubeURL(currentTabURL);
+    console.log("tabID: " + tabID);
+    chrome.tabs.get(tabID, function(tab){
+        console.log(tab.url);
+        if (tab.url.match("youtube.com")) parseYoutubeURL(tab.url);
         else notify("You must be on youtube site");
     });
 }
 
 function checkIcon() {
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-        var currentTabURL = tabs[0].url;
-        if (currentTabURL.match("youtube.com[^\s]+v=[A-Za-z0-9_-]{11}") || currentTabURL.match("youtube.com[^\s]+list=[A-Za-z0-9_-]{34}")) setIconColor();
+    console.log("tabID: " + tabID);
+    chrome.tabs.get(tabID, function(tab){
+        console.log(tab.url);
+        if (tab.url.match("youtube.com[^\s]+v=[A-Za-z0-9_-]{11}") || tab.url.match("youtube.com[^\s]+list=[A-Za-z0-9_-]{34}")) setIconColor();
         else setIconGrey();
     });
 }
@@ -61,7 +64,7 @@ function sendRequestToKODI(data, hostData) {
     };
     console.log(hostData);
     console.log(JSON.stringify(get));
-    xhr.open("GET", "http://" + hostData.user + ":" + hostData.pass + "@" + hostData.host + ":" + hostData.port + "/jsonrpc?request=" + JSON.stringify(get), true);
+    xhr.open("GET", "http://" + encodeURIComponent(hostData.user) + ":" + encodeURIComponent(hostData.pass) + "@" + encodeURIComponent(hostData.host) + ":" + encodeURIComponent(hostData.port) + "/jsonrpc?request=" + JSON.stringify(get), true);
     xhr.timeout = 5000;
     xhr.onreadystatechange = function (aEvt) {
         if (xhr.readyState == 4) {
@@ -69,7 +72,6 @@ function sendRequestToKODI(data, hostData) {
                 var resp = xhr.responseText;
                 parseJSON(resp);
             } else {
-                console.log("Error Sending request to KODI");
                 notify("Error Sending request to KODI");
             }
         }
@@ -108,8 +110,8 @@ function encodeQueryData(data) {
 function setIconColor() {
     browser.browserAction.setIcon({
         path:  {
-          96: "icons/youtube2kodi-96.png",
-          48: "icons/youtube2kodi-48.png"
+            96: "icons/youtube2kodi-96.png",
+            48: "icons/youtube2kodi-48.png"
         }
     });
 }
@@ -117,13 +119,24 @@ function setIconColor() {
 function setIconGrey() {
     browser.browserAction.setIcon({
         path:  {
-          96: "icons/youtube2kodi_nk-96.png",
-          48: "icons/youtube2kodi_nk-48.png"
+            96: "icons/youtube2kodi_nk-96.png",
+            48: "icons/youtube2kodi_nk-48.png"
         }
     });
 }
 
 chrome.browserAction.onClicked.addListener(getURLfromTab);
-chrome.tabs.onUpdated.addListener(checkIcon);
-chrome.tabs.onActivated.addListener(checkIcon);
-checkIcon();
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+    tabID = tab.id;
+    checkIcon()
+});
+chrome.tabs.onActivated.addListener(function(tab){
+    tabID = tab.tabId;
+    checkIcon()
+});
+chrome.tabs.onCreated.addListener(function(tab){
+    tabID = tab.id;
+    checkIcon()
+});
+setIconGrey()
