@@ -1,33 +1,33 @@
 {
-	"applications": {
-		"gecko": {
-			"id": "{6a87491e-e1ed-4c2c-b1b6-4aa07a2f9282}"
-		}
-	},
-	"manifest_version": 2,
-	"name": "Youtube 2 KODI",
-	"version": "1.1.5",
-	"description": "Play Youtube video in KODI",
-	"icons": {
-		"48": "icons/youtube2kodi-48.png",
-		"96": "icons/youtube2kodi-96.png"
-	},
-	"permissions": ["tabs",
-	"notifications",
-	"storage",
-	"<all_urls>"],
-	"browser_action": {
-		"default_icon": "icons/youtube2kodi-48.png",
-		"default_title": "Youtube 2 KODI",
+    "applications": {
+        "gecko": {
+            "id": "{6a87491e-e1ed-4c2c-b1b6-4aa07a2f9282}"
+        }
+    },
+    "manifest_version": 2,
+    "name": "Youtube 2 KODI",
+    "version": "1.1.6",
+    "description": "Play Youtube video in KODI",
+    "icons": {
+        "48": "icons/youtube2kodi-48.png",
+        "96": "icons/youtube2kodi-96.png"
+    },
+    "permissions": ["tabs",
+    "notifications",
+    "storage",
+    "<all_urls>"],
+    "browser_action": {
+        "default_icon": "icons/youtube2kodi-48.png",
+        "default_title": "Youtube 2 KODI",
         "default_popup": "popup/remote_panel.html",
         "browser_style": false
-	},
-	"options_ui": {
-		"page": "options.html"
-	},
-	"background": {
-		"scripts": ["background.js"]
-	},
+    },
+    "options_ui": {
+        "page": "options.html"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    },
     "content_scripts": [
     {
       "matches": ["https://www.youtube.com/*"],
