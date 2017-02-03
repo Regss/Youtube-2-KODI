@@ -1,3 +1,31 @@
-#options { border-collapse:collapse; border-spacing:0px; }
-.name { padding:5px; margin:5px; text-align:right; }
-input { width: 300px; }
+#options_container {
+    font-family: Arial;
+    font-size: 12px;
+}
+
+#options {
+    border-collapse:separate;
+    border-spacing:10px;
+}
+
+.txt_a_right {
+    text-align:right;
+}
+
+.txt_center {
+    text-align: center;
+}
+
+input {
+    width: 190px;
+    padding-left:5px;
+}
+
+.options_button {
+    display: inline-block;
+    border: 1px solid #000;
+    background-color:#eee;
+    padding:2px 3px 2px 3px;
+    cursor:pointer;
+    width: 200px;
+}

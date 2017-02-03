@@ -1,0 +1,52 @@
+* { padding:0px; margin:0px; }
+
+body { font-family: Arial; }
+
+#tooltip {
+    display:none;
+    position:fixed;
+    overflow:hidden;
+    font-size: 10px;
+    background-color:#ddd;
+    border:1px solid #ccc;
+    padding:2px 3px 2px 3px;
+}
+
+#container {
+    border: 1px solid #ddd;
+    margin:3px;
+    padding:3px 3px 0px 3px;
+}
+
+.menu_title {
+    font-family: Arial;
+    background-color: #eee;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 0px 2px 5px;
+}
+
+.menu_buttons {
+    margin:4px;
+}
+
+.button {
+    padding:2px;
+    cursor: pointer;
+    width:24px;
+    height: 24px;
+}
+
+#menu_kodi {
+    background-image: url("img/bg-kodi.jpg");
+    background-position:center;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+}
+
+#menu_youtube {
+    background-image: url("img/bg-youtube.jpg");
+    background-position:center;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+}

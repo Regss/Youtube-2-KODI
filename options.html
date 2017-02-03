@@ -5,27 +5,36 @@
     <link href="options.css" rel="stylesheet">
   </head>
   <body>
-    <form autocomplete="off">
-        <table id="options">
-            <tr>
-                <td class="name">HOST:</td>
-                <td><input type="text" id="host" ></td>
-            </tr>
-            <tr>
-                <td class="name">PORT:</td>
-                <td><input type="text" id="port" ></td>
-            </tr>
-            <tr>
-                <td class="name">USER:</td>
-                <td><input type="text" id="user" ></td>
-            </tr>
-            <tr>
-                <td class="name">PASS:</td>
-                <td><input type="text" id="pass"></td>
-            </tr>
-        </table>
-        <p><button type="submit">Save</button></p>
-    </form>
+    <div id="options_container">
+        <form autocomplete="off">
+            <table id="options">
+                <tr>
+                    <td class="txt_a_right">HOST:</td>
+                    <td><input type="text" id="host" ></td>
+                </tr>
+                <tr>
+                    <td class="txt_a_right">PORT:</td>
+                    <td><input type="text" id="port" ></td>
+                </tr>
+                <tr>
+                    <td class="txt_a_right">USER:</td>
+                    <td><input type="text" id="user" ></td>
+                </tr>
+                <tr>
+                    <td class="txt_a_right">PASS:</td>
+                    <td><input type="text" id="pass"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="txt_center"><button id="test_button" class="options_button" type="button">Test Connection</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="txt_center"><button id="save_button" class="options_button" type="button">Save</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
     <script src="options.js"></script>
   </body>
 </html>

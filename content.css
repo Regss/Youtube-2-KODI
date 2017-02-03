@@ -1,0 +1,13 @@
+#kodi  {
+    margin-left: 20px;
+    margin-top: -5px;
+    position: absolute;
+    overflow: hidden;
+}
+
+#kodi img {
+    margin-left:10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
